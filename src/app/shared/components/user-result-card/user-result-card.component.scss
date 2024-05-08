@@ -1,0 +1,52 @@
+@use "functions" as fun;
+@use "mixins";
+
+@use "variables/colors";
+
+
+$icon-address: "/assets/icons/newscreen.svg";
+$icon-size: fun.convert-px-to-rem(32);
+
+$profile-picture-size: fun.convert-px-to-rem(64);
+
+.card-user {
+  background-color: colors.$bg-light;
+  border: none;
+  position: relative;
+  transition: background .2s;
+
+  .username {
+    color: colors.$dark;
+    transition: color .2s;
+  }
+
+  >img {
+    height: $profile-picture-size;
+    width: $profile-picture-size;
+  }
+
+
+  @include mixins.create-bottom-icon-inactive($icon-address, $icon-size);
+
+  &:hover, &.active {
+    @include mixins.create-bottom-icon-active();
+
+    .username {
+      color: colors.$highlight;
+    }
+  }
+}
+
+.d-grid {
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
+
+  @include mixins.media-breakpoint-down(lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mixins.media-breakpoint-down(md) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+

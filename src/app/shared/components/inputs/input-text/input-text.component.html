@@ -1,0 +1,9 @@
+<div class="form-control d-flex py-0 pe-0 gap-2 overflow-hidden">
+  <ng-content [select]="[icon]"></ng-content>
+  <input
+    class="p-2"
+    type="text"
+    [formControl]="control"
+    [placeholder]="placeholderInput"
+  >
+</div>

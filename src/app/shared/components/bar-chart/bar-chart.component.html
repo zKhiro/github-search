@@ -1,0 +1,10 @@
+<span>
+  <ng-content></ng-content>
+</span>
+
+<section class="d-flex align-items-center flex-fill position-relative">
+  <div class="bar" [style.width.%]="percentage * 100"></div>
+  <div class="background-line position-absolute"></div>
+</section>
+
+<span class="text-end">{{ percentage | percent: '1.0-1' }}</span>

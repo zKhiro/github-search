@@ -1,0 +1,29 @@
+@use "variables/colors";
+@use "functions" as fun;
+
+
+:host {
+  grid-template-columns: 7.5rem 1fr 3rem;
+}
+
+.bar {
+  animation: bar-width-transition .4s linear;
+  background-color: colors.$highlight;
+  height: fun.convert-px-to-rem(8);
+  border-radius: 1rem;
+  z-index: 2;
+}
+
+.background-line {
+  background-color: colors.$light-gray;
+  border-radius: 1rem;
+  height: fun.convert-px-to-rem(2);
+  width: 100%;
+  z-index: 1;
+}
+
+@keyframes bar-width-transition {
+  from {
+    width: 0;
+  }
+}

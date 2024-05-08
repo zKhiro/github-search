@@ -1,0 +1,35 @@
+<button
+  *ngIf="options.first"
+  class="btn first"
+  type="button"
+  (click)="click.emit('first')"
+>
+  Primeira
+</button>
+
+<button
+  *ngIf="options.prev"
+  class="btn prev"
+  type="button"
+  (click)="click.emit('prev')"
+>
+  Voltar
+</button>
+
+<button
+  *ngIf="options.next"
+  class="btn next"
+  type="button"
+  (click)="click.emit('next')"
+>
+  Proximo
+</button>
+
+<button
+  *ngIf="options.last"
+  class="btn last"
+  type="button"
+  (click)="click.emit('last')"
+>
+  Última
+</button>

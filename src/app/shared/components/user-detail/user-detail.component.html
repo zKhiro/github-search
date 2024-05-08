@@ -1,0 +1,153 @@
+<div
+  class="card-fixed overflow-hidden"
+  [appHideBodyScroll]="isOpen"
+  [class.open]="isOpen"
+>
+  <button
+    class="btn close text-secondary border-start border-bottom p-2"
+    type="button"
+    (click)="closeCard()"
+  >
+    <app-icon-cross [style.width.rem]="1.3125"></app-icon-cross>
+  </button>
+
+  <section class="card border-start ps-md-4 ps-3 pt-md-6 pt-5 rounded-0 position-relative">
+    <ng-container *ngIf="userDetailRequest && !userDetailRequest.loading; else loadingTemplate">
+      <header class="d-flex mb-6">
+        <img
+          class="profile-picture rounded-circle me-3"
+          alt="rounded profile picture"
+          [src]="user.profilePicture"
+        >
+
+        <div class="d-flex flex-column h-100">
+          <h1 class="mb-1">{{ userDetailRequest.response.name }}</h1>
+          <p class="text-secondary fs-14px fw-semibold">{{ user.username }}</p>
+
+          <section class="d-flex mt-auto gap-2">
+            <a
+              class="link-network text-dark"
+              target="_blank"
+              [href]="userDetailRequest.response.link + '?tab=followers'"
+            >
+              <b class="text-secondary">{{ userDetailRequest.response.followers }}</b> seguidores
+            </a>
+            ·
+            <a
+              class="link-network text-dark"
+              target="_blank"
+              [href]="userDetailRequest.response.link + '?tab=following'"
+            >
+              <b class="text-secondary">{{ userDetailRequest.response.following }}</b> seguindo
+            </a>
+          </section>
+        </div>
+      </header>
+
+      <section class="overflow-auto pe-md-4 pe-3 pb-md-6 pb-5">
+        <section
+          *ngIf="user.repositories.length"
+          class="d-flex flex-column mb-4"
+        >
+          <header>
+            <h3 class="text-secondary">Repositórios</h3>
+          </header>
+
+          <div class="repositories-grid gap-3">
+            <ng-container *ngFor="let repository of user.repositories; let index = index">
+              <app-repository
+                *ngIf="index < 3"
+                [repository]="repository"
+              ></app-repository>
+            </ng-container>
+          </div>
+
+          <ng-container *ngIf="user.repositories.length > userService.maxVisibleRepositories">
+            <span class="d-block text-center text-secondary mb-2">...</span>
+
+            <a
+              class="btn btn-see-all btn-bg-light mx-auto"
+              [href]="userDetailRequest.response.link + '?tab=repositories'"
+              target="_blank"
+            >
+              Ver todos os <b>{{ user.repositories.length }}</b> repositórios
+            </a>
+          </ng-container>
+
+        </section>
+
+        <section class="d-flex flex-column">
+          <header>
+            <h3 class="text-secondary">Commits</h3>
+          </header>
+
+          <div class="d-inline-flex ms-auto gap-3 mb-4">
+            <app-input-select
+              [control]="commitFilterForm.controls.month"
+              [options]="monthOptions"
+              [disabled]="commitsRequest.loading"
+            ></app-input-select>
+
+            <app-input-select
+              [control]="commitFilterForm.controls.year"
+              [options]="yearOptions"
+              [disabled]="commitsRequest.loading"
+            ></app-input-select>
+          </div>
+
+          <ng-container *ngIf="commitsRequest && !commitsRequest.loading; else loadingTemplate">
+            <section class="d-flex flex-column gap-3">
+              <ng-container *ngIf="commits.length; else emptyStateTemplate">
+                <app-commits
+                  *ngFor="let commit of commits"
+                  [commit]="commit"
+                ></app-commits>
+              </ng-container>
+            </section>
+
+            <ng-container *ngIf="commitsRequest.response.length > commitsServices.maxVisibleCommits">
+              <span class="d-block text-center text-secondary mb-2">...</span>
+
+              <a
+                class="btn btn-see-all btn-bg-light mx-auto"
+                target="_blank"
+                [href]="'https://github.com/search?type=Commits&q=' + commitsServices.query"
+              >
+                Ver todos os <b>{{ commitsServices.totalCommits }}</b> commits
+              </a>
+            </ng-container>
+          </ng-container>
+        </section>
+
+        <section *ngIf="user.techs.length" class="mt-4">
+          <header>
+            <h3 class="text-secondary">Techs</h3>
+          </header>
+
+          <section class="d-grid gap-2">
+            <app-bar-chart
+              *ngFor="let tech of user.techs"
+              [percentage]="tech.percentage"
+            >
+              {{ tech.name }}
+            </app-bar-chart>
+          </section>
+        </section>
+      </section>
+    </ng-container>
+  </section>
+</div>
+
+<ng-template #loadingTemplate>
+  <app-loading class="m-auto"></app-loading>
+</ng-template>
+
+<ng-template #emptyStateTemplate>
+  <app-empty-state></app-empty-state>
+</ng-template>
+
+<div
+  class="card-backdrop"
+  [class.open]="isOpen"
+  (click)="closeCard()"
+></div>

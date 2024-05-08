@@ -1,0 +1,16 @@
+@use "typography";
+@use "../functions" as fun;
+
+
+$padding-y: .25rem;
+$padding-x: .5rem;
+
+$font-size:   fun.convert-px-to-rem(14);
+$font-weight: 600;
+
+$letter-spacing: .02em;
+
+$border-radius: .5rem;
+
+$link-transition-duration: .15s;
+$link-transition: background-image $link-transition-duration;

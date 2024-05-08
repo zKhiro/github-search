@@ -1,0 +1,77 @@
+@use "sass:map";
+
+@use "../abstracts/variables/borders";
+@use "../abstracts/variables/layouts";
+@use "../abstracts/variables/breakpoints";
+@use "../abstracts/variables/colors";
+@use "../abstracts/variables/typography";
+@use "../abstracts/variables/buttons";
+
+@use "../abstracts/functions" as fun;
+
+
+@forward "bootstrap/scss/bootstrap" with (
+  $spacer:  layouts.$spacer,
+  $spacers: layouts.$spacers,
+
+  $grid-breakpoints:      breakpoints.$grid-breakpoints,
+  $container-max-widths:  breakpoints.$container-max-widths,
+  $container-padding-x:   layouts.$container-padding-x,
+
+  $theme-colors:  colors.$theme,
+  $body-bg:       colors.$white,
+  $body-color:    colors.$dark,
+
+  $border-color:  colors.$light-gray,
+  $border-radius: borders.$border-size,
+
+  $font-family-sans-serif:  typography.$font-family-sans-serif,
+
+  $font-weight-normal:    typography.$font-weight-normal,
+  $headings-font-weight:  typography.$headings-font-weight,
+
+  $font-size-root:      #{typography.$font-size-root}px,
+  $font-size-base:      typography.$font-size-base,
+  $h1-font-size:        typography.$h1-font-size,
+  $h2-font-size:        typography.$h2-font-size,
+  $h3-font-size:        typography.$h3-font-size,
+  $font-weight-bolder:  800,
+
+
+  /** Inputs **/
+  $input-bg:            colors.$bg-light,
+  $input-border-width:  0,
+
+  /** Buttons **/
+
+  $btn-color:         colors.$dark,
+  $btn-padding-y:     buttons.$padding-y,
+  $btn-padding-x:     buttons.$padding-x,
+  $btn-font-size:     buttons.$font-size,
+  $btn-border-radius: buttons.$border-radius,
+  $btn-font-weight:   buttons.$font-weight,
+
+  $enable-rfs: false,
+
+  /** Links **/
+
+  $link-decoration:   none,
+
+
+  /** Cards **/
+
+  $card-border-width:                 0,
+  $card-border-radius:                fun.convert-px-to-rem(24),
+  $card-cap-padding-y:                0,
+  $card-cap-padding-x:                0,
+  $card-cap-bg:                       transparent,
+  $card-bg:                           rgba(255 255 255 / .06),
+
+  /** Badges **/
+
+  $badge-font-size:                   fun.convert-px-to-rem(12),
+  $badge-font-weight:                 400,
+  $badge-color:                       inherit,
+  $badge-padding-y:                   fun.convert-px-to-rem(6 + 4),
+  $badge-padding-x:                   fun.convert-px-to-rem(8),
+);

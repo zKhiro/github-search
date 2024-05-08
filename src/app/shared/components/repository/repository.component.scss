@@ -1,0 +1,12 @@
+@use "variables/colors";
+
+
+.btn {
+  &:hover {
+    background-color: colors.$bg-highlight !important;
+
+    .repository-title {
+      color: colors.$highlight
+    }
+  }
+}

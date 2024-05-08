@@ -1,0 +1,20 @@
+<a
+  class="btn d-flex flex-column bg-bg-light text-start p-2 rounded w-100 h-100"
+  target="_blank"
+  [href]="repository.link"
+>
+  <header>
+    <h3 class="repository-title d-flex mb-1">
+      <app-icon-package [style.width.rem]="1"></app-icon-package>
+      <span class="ms-1">{{ repository.ownerLogin }}/</span>
+
+      {{ repository.name }}
+    </h3>
+  </header>
+
+  <p class="text-secondary fs-14px mb-2">{{ repository.description }}</p>
+
+  <section class="mt-auto">
+    <div class="badge bg-dark text-bg-light">{{ repository.tech }}</div>
+  </section>
+</a>

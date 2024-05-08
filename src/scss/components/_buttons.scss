@@ -1,0 +1,10 @@
+@use "../abstracts/variables/colors";
+@use "../abstracts/variables/buttons";
+
+.btn {
+  color: colors.$dark;
+  letter-spacing: buttons.$letter-spacing;
+
+  &:hover { color: colors.$highlight; }
+  &:active { border-color: transparent !important; }
+}

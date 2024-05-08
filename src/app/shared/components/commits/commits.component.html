@@ -1,0 +1,30 @@
+<section class="d-flex flex-column bg-bg-light rounded p-2">
+  <a
+    class="btn fs-6 text-start p-0"
+    target="_blank"
+    [href]="commit.link"
+  >
+    {{ commit.message }}
+  </a>
+
+  <section class="d-flex text-secondary">
+    <app-icon-package [style.width.rem]="0.75" class="me-1"></app-icon-package>
+    <ng-container *ngIf="commit.authorUsername !== commit.repository.owner.username">
+      <a
+        class="btn text-secondary d-inline p-0"
+        target="_blank"
+        [href]="commit.repository.owner.link"
+      >
+        {{ commit.repository.owner.username }}
+      </a>
+      /
+    </ng-container>
+    <a
+      class="btn text-secondary d-inline p-0"
+      target="_blank"
+      [href]="commit.repository.link"
+    >
+      {{ commit.repository.name }}
+    </a>
+  </section>
+</section>

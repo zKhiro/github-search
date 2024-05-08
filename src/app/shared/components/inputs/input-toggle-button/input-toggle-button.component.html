@@ -1,0 +1,17 @@
+<button
+  class="btn d-inline-flex btn-toggle btn-bg-light align-items-center gap-1"
+  type="button"
+  [class.active]="control.value"
+  [attr.aria-pressed]="control.value"
+  (click)="control.setValue(!control.value)"
+>
+  <ng-content [select]="[icon]"></ng-content>
+
+  {{ label }}
+
+  <input
+    type="checkbox"
+    [formControl]="control"
+    hidden
+  >
+</button>

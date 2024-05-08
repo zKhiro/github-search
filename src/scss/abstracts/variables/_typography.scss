@@ -1,0 +1,10 @@
+$font-family-sans-serif:  "Mukta", sans-serif;
+
+$font-weight-normal:    400;
+$headings-font-weight:  700;
+
+$font-size-root:  16;
+$font-size-base:  1rem;
+$h1-font-size:    clamp($font-size-base * 1.25, 4.5vw, $font-size-base * 1.5);
+$h2-font-size:    clamp($font-size-base * 1.15, 3vw, $font-size-base * 1.25);
+$h3-font-size:    $font-size-base * 1;

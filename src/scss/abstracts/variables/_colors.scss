@@ -1,0 +1,22 @@
+$white:         #FFF;
+$gray:          #70778F;
+$light-gray:    #E2E4E9;
+$dark:          #292D3D;
+
+$highlight:       #2544AB;
+$bg-highlight:    #E6EAF9;
+$danger:          #AB2544;
+$bg-danger:       #DB5C7A;
+$bg-light:        #EEF0F6;
+$bg-fav:          #5C79DB;
+
+$theme: (
+  "primary":      $highlight,
+  "secondary":    $gray,
+  "dark":         $dark,
+  "danger":       $danger,
+  "bg-danger":    $bg-danger,
+  "bg-highlight": $bg-highlight,
+  "bg-light":     $bg-light,
+  "bg-fav":       $bg-fav,
+);

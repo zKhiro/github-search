@@ -1,0 +1,112 @@
+<form
+  class="mt-6 mb-5"
+  [formGroup]="filterForm"
+  (ngSubmit)="performSearch()"
+>
+  <app-input-text placeholderInput="Busca..." [control]="filterForm.controls.search">
+    <app-icon-search class="text-secondary" [style.width.rem]="1.125" icon></app-icon-search>
+  </app-input-text>
+
+  <p class="fs-14px text-secondary mt-3 mb-2">Você está procurando:</p>
+
+  <div class="d-flex gap-2">
+    <app-input-toggle-button
+      label="Usuários"
+      [control]="filterForm.controls.user"
+    >
+      <app-icon-user [style.width.rem]="1" icon></app-icon-user>
+    </app-input-toggle-button>
+
+    <app-input-toggle-button
+      label="Repositórios"
+      [control]="filterForm.controls.repository"
+    >
+      <app-icon-package [style.width.rem]="1" icon></app-icon-package>
+    </app-input-toggle-button>
+  </div>
+
+  <button
+    class="btn btn-bg-light mt-3 px-3 fs-6"
+    type="submit"
+    [disabled]="!filterForm.controls.search.value"
+  >
+    Buscar
+  </button>
+</form>
+
+<ng-container *ngIf="userSearchRequest || repositorySearchRequest">
+  <h2 class="flex-center">
+    Resultados para:
+    <span class="text-secondary ms-1">
+      {{ this.currentSearch.search }}
+    </span>
+  </h2>
+
+  <section *ngIf="this.currentSearch.user || !this.currentSearch.repository">
+    <header>
+      <h3 class="fs-14px text-secondary fw-normal mb-3">
+        Usuários
+      </h3>
+    </header>
+
+    <div class="mb-5" *ngIf="!userSearchRequest?.loading; else loadingTemplate">
+      <ng-container *ngIf="userSearchRequest?.successful && userSearchRequest?.response?.length; else emptyStateTemplate">
+        <section class="users-grid gap-3">
+          <app-user-result-card
+            *ngFor="let user of userSearchRequest.response"
+            [user]="user"
+            [isSelected]="isOpen && selectedUser.username === user.username"
+            (clickButton)="openUserDetails(user)"
+          ></app-user-result-card>
+        </section>
+
+        <app-paginator
+          *ngIf="userSearchRequest.pagination"
+          class="mt-2"
+          [options]="userSearchRequest.pagination"
+          (click)="searchUser(userSearchRequest.pagination[$event]!, true)"
+        ></app-paginator>
+      </ng-container>
+    </div>
+  </section>
+
+  <section *ngIf="this.currentSearch.repository || !this.currentSearch.user">
+    <header>
+      <h3 class="fs-14px text-secondary fw-normal">
+        Repositórios
+      </h3>
+    </header>
+
+    <div class="mb-5" *ngIf="!repositorySearchRequest?.loading; else loadingTemplate">
+      <ng-container *ngIf="repositorySearchRequest?.successful && repositorySearchRequest?.response?.length; else emptyStateTemplate">
+        <section class="repositories-grid gap-3">
+          <app-repository
+            *ngFor="let repository of repositorySearchRequest.response"
+            class="w-100"
+            [repository]="repository"
+          ></app-repository>
+        </section>
+
+        <app-paginator
+          *ngIf="repositorySearchRequest.pagination"
+          class="mt-2"
+          [options]="repositorySearchRequest.pagination"
+          (click)="searchRepository(repositorySearchRequest.pagination[$event]!, true)"
+        ></app-paginator>
+      </ng-container>
+    </div>
+  </section>
+</ng-container>
+
+<app-user-detail
+  [user]="selectedUser"
+  [(isOpen)]="isOpen"
+></app-user-detail>
+
+<ng-template #loadingTemplate>
+  <app-loading></app-loading>
+</ng-template>
+
+<ng-template #emptyStateTemplate>
+  <app-empty-state></app-empty-state>
+</ng-template>

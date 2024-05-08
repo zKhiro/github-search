@@ -1,0 +1,24 @@
+<button
+  class="card-user d-inline-flex gap-3 p-3 rounded w-100 h-100"
+  type="button"
+  [class.active]="isSelected"
+  (click)="clickButton.emit()"
+>
+  <img
+    alt="user-profile-picture"
+    class="rounded-circle"
+    [src]="user.profilePicture"
+  >
+
+  <section class="d-flex flex-column flex-fill fw-bold">
+    <p class="username d-inline-flex gap-2 align-items-center">
+      {{ user.username }}
+    </p>
+
+    <section class="d-flex gap-2">
+      <ng-container *ngFor="let tech of user.techs; let index = index">
+        <div *ngIf="index < 3" class="badge bg-dark text-bg-light">{{ tech.name }}</div>
+      </ng-container>
+    </section>
+  </section>
+</button>

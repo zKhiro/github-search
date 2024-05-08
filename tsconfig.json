@@ -2,9 +2,11 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
+    "strictPropertyInitialization": false,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
@@ -21,7 +23,18 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "paths": {
+      // Core
+      "@classes": ["src/app/core/classes"],
+      "@services": ["src/app/core/services"],
+      "@models/*": ["src/app/core/models/*"],
+      "@utils": ["src/app/core/utils"],
+
+      // Shared
+      "@components": ["src/app/shared/components"],
+      "@directives": ["src/app/shared/directives"],
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

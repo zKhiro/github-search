@@ -1,0 +1,55 @@
+@use "sass:math";
+
+@use "bootstrap/scss/mixins/breakpoints" as bs-breakpoints;
+
+@use "functions" as fun;
+
+@use "variables/breakpoints";
+@use "variables/colors";
+
+
+@mixin create-bottom-icon-inactive($addres, $size) {
+  $position: calc(#{$size} / -2);
+
+  position: relative;
+
+  &::after {
+    background-image: url($addres);
+    bottom: $position;
+    content: '';
+    height: $size;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    right: $position;
+    transition: opacity .2s;
+    width:  $size;
+  }
+}
+
+@mixin create-bottom-icon-active() {
+  background-color: colors.$bg-highlight;
+  color: colors.$highlight;
+
+  &::after {
+    opacity: 1;
+  }
+}
+
+@mixin media-breakpoint-up($breakpoint) {
+  @include bs-breakpoints.media-breakpoint-up($breakpoint, breakpoints.$grid-breakpoints) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($breakpoint) {
+  @include bs-breakpoints.media-breakpoint-down($breakpoint, breakpoints.$grid-breakpoints) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-only($breakpoint) {
+  @include bs-breakpoints.media-breakpoint-only($breakpoint, breakpoints.$grid-breakpoints) {
+    @content;
+  }
+}

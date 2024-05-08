@@ -1,0 +1,12 @@
+.loading-animated {
+  animation: animate-opacity alternate infinite .7s linear;
+}
+
+@keyframes animate-opacity {
+  from {
+    opacity: .25;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,24 @@
+/**
+  @to-do: adicionar icones de setas única para voltar/proxima pagina
+          e icone de setas duplas para primeira/ultima pagina.
+*/
+
+%general-style-icon {
+  content: '';
+  // opacity: 0;
+}
+
+
+.btn {
+  &.first, &.prev {
+    &::before {
+      @extend %general-style-icon;
+    }
+  }
+
+  &.next, &.last {
+    &::after {
+      @extend %general-style-icon;
+    }
+  }
+}

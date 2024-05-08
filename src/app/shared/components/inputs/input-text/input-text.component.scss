@@ -1,0 +1,20 @@
+@use "variables/colors";
+
+.form-control {
+  transition: background-color .2s;
+
+  input {
+    background-color: inherit;
+    border: none;
+    padding: 0;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &:focus-within {
+    background-color: colors.$bg-highlight;
+  }
+}

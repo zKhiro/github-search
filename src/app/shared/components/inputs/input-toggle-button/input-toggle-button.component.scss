@@ -1,0 +1,23 @@
+@use "functions" as fun;
+@use "mixins";
+
+@use "variables/colors";
+
+
+$icon-address: "/assets/icons/checkcircle.svg";
+$icon-size: fun.convert-px-to-rem(16);
+
+.btn-icon {
+  width: $icon-size;
+}
+
+.btn-toggle {
+  position: relative;
+
+  @include mixins.create-bottom-icon-inactive($icon-address, $icon-size);
+
+  &.active {
+    @include mixins.create-bottom-icon-active();
+  }
+
+}
