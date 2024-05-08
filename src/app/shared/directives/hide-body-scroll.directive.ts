@@ -24,15 +24,15 @@ export class HideBodyScrollDirective {
     const body = document.body;
     let inlineStyle: Partial<CSSStyleDeclaration> = {
       overflow: '',
-      paddingLeft: '',
+      paddingRight: '',
     };
 
     if(this.appHideBodyScroll) {
-      const scrollbarSize = body.offsetWidth - window.innerWidth;
+      const scrollbarSize = window.innerWidth - body.offsetWidth;
 
       inlineStyle = {
         overflow: 'hidden',
-        paddingLeft: scrollbarSize + 'px',
+        paddingRight: scrollbarSize + 'px',
       };
     }
 
