@@ -62,8 +62,6 @@ export class HomeComponent {
       return;
     }
 
-    console.log(this.userService.mapUserRepositories(user.username));
-
     this.selectedUser = {
       ...user,
       repositories: this.userService.mapUserRepositories(user.username),
