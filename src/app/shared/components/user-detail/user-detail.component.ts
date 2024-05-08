@@ -38,7 +38,6 @@ import { RepositoryComponent } from '../repository/repository.component';
   ],
   providers: [
     CommitsService,
-    UserService,
   ],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.scss'
@@ -50,13 +49,18 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     this.isOpenChange.emit(newValue);
 
     if(this._isOpen) {
+      const currentYear = new Date().getFullYear();
+
       this.commitFilterForm.setValue({
         month: new Date().getMonth() + 1,
-        year: new Date().getFullYear(),
+        year: currentYear,
       });
 
+      this.yearOptions = [{ label: currentYear.toString(), value: currentYear }]
+
       this.requestUserDetails();
-      this.requestCommits();
+    } else {
+      this.commitsServices.firstCommitYear = '';
     }
   };
   get isOpen() { return this._isOpen; }
@@ -85,14 +89,10 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     year: new FormControl(),
   });
 
-  yearOptions: SelectOptionModel<number>[] = [
-    { label: '2024', value: 2024 }
-  ]
+  yearOptions: SelectOptionModel<number>[];
 
   userDetailRequest: RequestClass<UserDetailModel>;
   commitsRequest: RequestClass<CommitModel[]>;
-
-  commits: CommitModel[];
 
   commitFilterFormChanges: Subscription;
 
@@ -139,16 +139,17 @@ export class UserDetailComponent implements OnInit, OnDestroy {
       tap(response => {
         const currentYear = new Date().getFullYear();
 
-        this.commitsRequest.response = response;
+        if(this.commitsServices.firstCommitYear) {
+          this.yearOptions = Array.from({ length: (currentYear - new Date(this.commitsServices.firstCommitYear).getFullYear()) }, (_, key) => {
+            const year = currentYear - key;
 
-        this.yearOptions = Array.from({ length: (currentYear - new Date(this.commitsServices.firstCommitYear).getFullYear()) + 1 }, (value, key) => {
-          const year = currentYear - key;
+            return { label: year.toString(), value: year };
+          });
+        }
 
-          return { label: year.toString(), value: year };
-        });
-
-
-        this.commits = response.slice(0, this.commitsServices.maxVisibleCommits);
+        if(response.length) {
+          this.commitsRequest.response = response.slice(0, this.commitsServices.maxVisibleCommits);
+        }
       }),
     );
 

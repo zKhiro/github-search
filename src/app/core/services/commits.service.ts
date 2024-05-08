@@ -34,7 +34,9 @@ export class CommitsService {
       mergeMap(response => {
         const response$ = of(response);
 
-        return !this.firstCommitYear ? forkJoin([response$, this.getFirstCommit(query.author)]) : forkJoin([response$]);
+        return !this.firstCommitYear
+          ? forkJoin([response$, this.getFirstCommit(query.author)])
+          : forkJoin([response$]);
       }),
       map(([response, firstCommitYear]) => {
         if(firstCommitYear) {

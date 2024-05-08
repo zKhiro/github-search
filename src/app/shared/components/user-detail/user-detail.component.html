@@ -97,15 +97,15 @@
 
           <ng-container *ngIf="commitsRequest && !commitsRequest.loading; else loadingTemplate">
             <section class="d-flex flex-column gap-3">
-              <ng-container *ngIf="commits.length; else emptyStateTemplate">
+              <ng-container *ngIf="commitsRequest.response?.length; else emptyStateTemplate">
                 <app-commits
-                  *ngFor="let commit of commits"
+                  *ngFor="let commit of commitsRequest.response"
                   [commit]="commit"
                 ></app-commits>
               </ng-container>
             </section>
 
-            <ng-container *ngIf="commitsRequest.response.length > commitsServices.maxVisibleCommits">
+            <ng-container *ngIf="commitsServices.totalCommits > commitsServices.maxVisibleCommits">
               <span class="d-block text-center text-secondary mb-2">...</span>
 
               <a
