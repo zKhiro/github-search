@@ -23,7 +23,7 @@ export class CommitsService {
   constructor(private readonly httpClient: HttpClient) { }
 
   getCommits(query: CommitQueryParamModel, pagination?: PaginationParamRequestModel): Observable<CommitModel[]> {
-    const isoDate = new Date(`${query.year}-${query.month}`).toISOString();
+    const isoDate = new Date(`${query.year}-${query.month}-01`).toISOString();
     this.query = `author:${query.author} committer-date:>=${isoDate} sort:committer-date-desc`;
 
     const params: ParamRequestModel = {
