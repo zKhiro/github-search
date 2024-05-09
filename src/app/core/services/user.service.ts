@@ -10,6 +10,7 @@ import {
 } from '@models/user.model';
 
 import { GithubEndpoints, PER_PAGE_DEFAULT, prepareGithubEndpoint } from '../utils/endpoints.util';
+import { FavoriteService } from './favorite.service';
 
 
 @Injectable({
@@ -22,7 +23,10 @@ export class UserService {
   userRepositoriesCache: ObjectModel<RepositoryResponseModel[]> = {};
 
 
-  constructor(private readonly httpClient: HttpClient) { }
+  constructor(
+    private readonly favoriteService: FavoriteService,
+    private readonly httpClient: HttpClient,
+  ) { }
 
   searchUser(query: string, pagination?: boolean): HttpResponse$<UserSearchResponseType> {
     let params = new HttpParams();
@@ -96,6 +100,7 @@ export class UserService {
           profilePicture: user.avatar_url,
           techs: this.mapAndOrderTechs(languages),
           username: user.login,
+          favorite: !!this.favoriteService.getFavorite(user.login)?.favorite,
         };
       }),
       toArray(),

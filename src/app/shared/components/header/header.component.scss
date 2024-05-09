@@ -1,0 +1,18 @@
+@use "functions" as fun;
+
+@use "variables/colors";
+
+
+.nav-link {
+  padding: 0;
+
+  a {
+    background-color: colors.$bg-light;
+    gap: fun.convert-px-to-rem(4);
+
+    &:hover {
+      color: colors.$highlight;
+      background-color: colors.$bg-highlight;
+    }
+  }
+}

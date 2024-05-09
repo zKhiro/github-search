@@ -1,4 +1,5 @@
 export * from "./bar-chart/bar-chart.component";
+export * from "./btn-favorite/btn-favorite.component";
 export * from "./commits/commits.component";
 export * from "./empty-state/empty-state.component";
 export * from "./header/header.component";
@@ -11,8 +12,10 @@ export * from "./user-result-card/user-result-card.component";
 export * from "./inputs/input-text/input-text.component";
 export * from "./inputs/input-toggle-button/input-toggle-button.component";
 
+export * from "./icons/icon-bookmark/icon-bookmark.component";
 export * from "./icons/icon-cross/icon-cross.component";
 export * from "./icons/icon-group/icon-group.component";
+export * from "./icons/icon-home/icon-home.component";
 export * from "./icons/icon-listright/icon-listright.component";
 export * from "./icons/icon-package/icon-package.component";
 export * from "./icons/icon-search/icon-search.component";

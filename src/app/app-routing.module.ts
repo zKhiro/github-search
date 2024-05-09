@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule),
+  },
+  {
+    path: 'favoritos',
+    loadChildren: () => import('./pages/favorites/favorites.module').then(m => m.FavoritesModule),
   }
 ];
 

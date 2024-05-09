@@ -1,0 +1,22 @@
+@use "variables/colors";
+
+
+.btn-fav {
+  color: colors.$highlight;
+  display: inline-flex;
+  fill: colors.$bg-light;
+  transition: fill .2s, color .2s;
+
+  &:hover {
+    fill: colors.$bg-fav;
+  }
+
+  &.favorite {
+    fill: colors.$bg-fav;
+
+    &:hover {
+      color: colors.$danger;
+      fill: colors.$bg-danger;
+    }
+  }
+}

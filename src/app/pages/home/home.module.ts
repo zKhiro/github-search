@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  BarChartComponent, EmptyStateComponent, IconPackageComponent, IconSearchComponent,
-  IconUserComponent, InputTextComponent, InputToggleButtonComponent, LoadingComponent,
-  PaginatorComponent, RepositoryComponent, UserDetailComponent, UserResultCardComponent,
+  EmptyStateComponent, IconPackageComponent, IconSearchComponent, IconUserComponent,
+  InputTextComponent, InputToggleButtonComponent, LoadingComponent, PaginatorComponent,
+  RepositoryComponent, UserResultCardComponent,
 } from '@components';
 
 import { HomeRoutingModule } from './home-routing.module';
@@ -21,10 +21,8 @@ import { HomeComponent } from './home.component';
 
     HomeRoutingModule,
 
-    UserDetailComponent,
     UserResultCardComponent,
 
-    BarChartComponent,
     EmptyStateComponent,
     LoadingComponent,
     PaginatorComponent,

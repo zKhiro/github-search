@@ -4,6 +4,10 @@ import { ObjectModel } from '@models/generic.model';
 export const BASE_ENDPOINT    = 'https://api.github.com/';
 export const PER_PAGE_DEFAULT = '9';
 
+// LocalStorage
+export const LS_FAVORITE = 'Favorites';
+
+
 export enum GithubEndpoints {
   /** ?q={query}{&page,per_page,sort,order} */
   Commits           = 'search/commits',

@@ -1,4 +1,3 @@
-import { RepositoryContentModel } from './repository.model';
 import { SearchResponseModel } from './response.model';
 
 
@@ -9,6 +8,7 @@ export interface UserResultCardModel {
   username: string;
   profilePicture: string;
   techs: TechModel[];
+  favorite: boolean;
 }
 
 export interface UserDetailModel {
@@ -22,10 +22,6 @@ export interface UserDetailModel {
 export interface TechModel {
   name: string;
   percentage: number;
-}
-
-export interface UserDetailContentModel extends UserResultCardModel {
-  repositories: RepositoryContentModel[];
 }
 
 export interface UserSearchResponseModel {
