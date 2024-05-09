@@ -10,19 +10,19 @@
   <p class="fs-14px text-secondary mt-3 mb-2">Você está procurando:</p>
 
   <div class="d-flex gap-2">
-    <app-input-toggle-button
+    <app-input-button-toggle
       label="Usuários"
       [control]="filterForm.controls.user"
     >
       <app-icon-user [style.width.rem]="1" icon></app-icon-user>
-    </app-input-toggle-button>
+    </app-input-button-toggle>
 
-    <app-input-toggle-button
+    <app-input-button-toggle
       label="Repositórios"
       [control]="filterForm.controls.repository"
     >
       <app-icon-package [style.width.rem]="1" icon></app-icon-package>
-    </app-input-toggle-button>
+    </app-input-button-toggle>
   </div>
 
   <button

@@ -1,5 +1,5 @@
 export * from "./bar-chart/bar-chart.component";
-export * from "./btn-favorite/btn-favorite.component";
+export * from "./button-favorite/button-favorite.component";
 export * from "./commits/commits.component";
 export * from "./empty-state/empty-state.component";
 export * from "./header/header.component";
@@ -10,7 +10,7 @@ export * from "./user-detail/user-detail.component";
 export * from "./user-result-card/user-result-card.component";
 
 export * from "./inputs/input-text/input-text.component";
-export * from "./inputs/input-toggle-button/input-toggle-button.component";
+export * from "./inputs/input-button-toggle/input-button-toggle.component";
 
 export * from "./icons/icon-bookmark/icon-bookmark.component";
 export * from "./icons/icon-cross/icon-cross.component";

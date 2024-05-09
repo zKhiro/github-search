@@ -6,14 +6,14 @@ import { BaseInput } from '../base-input.class';
 
 
 @Component({
-  selector: 'app-input-toggle-button',
+  selector: 'app-input-button-toggle',
   standalone: true,
   imports: [
     ReactiveFormsModule,
 
     IconUserComponent,
   ],
-  templateUrl: './input-toggle-button.component.html',
-  styleUrl: './input-toggle-button.component.scss'
+  templateUrl: './input-button-toggle.component.html',
+  styleUrl: './input-button-toggle.component.scss'
 })
-export class InputToggleButtonComponent extends BaseInput {}
+export class InputButtonToggleComponent extends BaseInput {}

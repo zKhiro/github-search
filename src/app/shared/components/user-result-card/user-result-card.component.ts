@@ -3,7 +3,7 @@ import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/co
 import { UserResultCardModel } from '@models/user.model';
 import { UserDetailService } from '@services';
 
-import { BtnFavoriteComponent } from '../btn-favorite/btn-favorite.component';
+import { ButtonFavoriteComponent } from '../button-favorite/button-favorite.component';
 
 
 @Component({
@@ -12,7 +12,7 @@ import { BtnFavoriteComponent } from '../btn-favorite/btn-favorite.component';
   imports: [
     CommonModule,
 
-    BtnFavoriteComponent,
+    ButtonFavoriteComponent,
   ],
   templateUrl: './user-result-card.component.html',
   styleUrl: './user-result-card.component.scss'
