@@ -1,6 +1,18 @@
-<section *ngIf="favorites.length; else emptyTemplate" class="users-grid">
+<section *ngIf="favorites.length; else emptyTemplate" class="mb-6 pb-3">
+  <form class="d-flex flex-wrap gap-2" [formGroup]="techFilterForm">
+    <p class="w-100 fs-14px text-secondary mb-2">Filtre por tecnologias:</p>
+
+    <app-input-button-toggle
+      *ngFor="let tech of techs"
+      [control]="techFilterForm.controls[tech]"
+      [label]="tech"
+    ></app-input-button-toggle>
+  </form>
+</section>
+
+<section class="users-grid">
   <app-user-result-card
-    *ngFor="let favorite of favorites"
+    *ngFor="let favorite of favoritesToShow"
     [user]="favorite"
   ></app-user-result-card>
 </section>

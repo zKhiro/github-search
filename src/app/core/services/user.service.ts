@@ -6,7 +6,7 @@ import { ObjectModel } from '@models/generic.model';
 import { RepositoryContentModel, RepositoryResponseModel } from '@models/repository.model';
 import { HttpResponse$ } from '@models/response.model';
 import {
-  TechModel, UserDetailModel, UserResponseModel, UserResultCardModel, UserSearchResponseType,
+  TechMap, UserDetailModel, UserResponseModel, UserResultCardModel, UserSearchResponseType,
 } from '@models/user.model';
 
 import { GithubEndpoints, PER_PAGE_DEFAULT, prepareGithubEndpoint } from '../utils/endpoints.util';
@@ -117,7 +117,7 @@ export class UserService {
     }));
   }
 
-  private mapAndOrderTechs(languages: string[]): TechModel[] {
+  private mapAndOrderTechs(languages: string[]): TechMap {
     const techs = new Map<string, number>();
 
     languages.forEach(language => {
@@ -128,7 +128,6 @@ export class UserService {
       techs.set(k, v / languages.length);
     });
 
-    return Array.from(techs, (v, k) => ({ name: v[0], percentage: v[1] }))
-            .sort((a, b) => b.percentage - a.percentage);
+    return new Map([ ...techs ].sort((a, b) => b[1] - a[1]));
   }
 }

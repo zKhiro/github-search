@@ -6,13 +6,13 @@ import { IconBookmarkComponent } from '../icons/icon-bookmark/icon-bookmark.comp
 
 
 @Component({
-  selector: 'app-btn-favorite',
+  selector: 'app-button-favorite',
   standalone: true,
   imports: [ IconBookmarkComponent ],
-  templateUrl: './btn-favorite.component.html',
-  styleUrl: './btn-favorite.component.scss'
+  templateUrl: './button-favorite.component.html',
+  styleUrl: './button-favorite.component.scss'
 })
-export class BtnFavoriteComponent {
+export class ButtonFavoriteComponent {
 
   @Input() user: UserResultCardModel;
 

@@ -3,7 +3,7 @@ import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/co
 import { UserResultCardModel } from '@models/user.model';
 import { UserDetailService } from '@services';
 
-import { BtnFavoriteComponent } from '../btn-favorite/btn-favorite.component';
+import { ButtonFavoriteComponent } from '../button-favorite/button-favorite.component';
 
 
 @Component({
@@ -12,18 +12,27 @@ import { BtnFavoriteComponent } from '../btn-favorite/btn-favorite.component';
   imports: [
     CommonModule,
 
-    BtnFavoriteComponent,
+    ButtonFavoriteComponent,
   ],
   templateUrl: './user-result-card.component.html',
   styleUrl: './user-result-card.component.scss'
 })
 export class UserResultCardComponent {
-  @Input() user: UserResultCardModel;
+  private _user: UserResultCardModel;
+  @Input() set user(newValue: UserResultCardModel) {
+    this._user = newValue;
+
+    this.techs = Array.from(this._user.techs.keys());
+  };
+  get user(): UserResultCardModel { return this._user; }
+
   @Input() isSelected: boolean;
 
   @Output() clickButton = new EventEmitter<void>();
 
   @HostBinding('class') classes = 'position-relative';
+
+  techs: string[];
 
 
   constructor(private userDetailService: UserDetailService) {}

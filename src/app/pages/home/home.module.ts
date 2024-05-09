@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   EmptyStateComponent, IconPackageComponent, IconSearchComponent, IconUserComponent,
-  InputTextComponent, InputToggleButtonComponent, LoadingComponent, PaginatorComponent,
+  InputButtonToggleComponent, InputTextComponent, LoadingComponent, PaginatorComponent,
   RepositoryComponent, UserResultCardComponent,
 } from '@components';
 
@@ -29,7 +29,7 @@ import { HomeComponent } from './home.component';
     RepositoryComponent,
 
     InputTextComponent,
-    InputToggleButtonComponent,
+    InputButtonToggleComponent,
 
     IconUserComponent,
     IconPackageComponent,
