@@ -1,6 +1,10 @@
-<section class="users-grid">
+<section *ngIf="favorites.length; else emptyTemplate" class="users-grid">
   <app-user-result-card
     *ngFor="let favorite of favorites"
     [user]="favorite"
   ></app-user-result-card>
 </section>
+
+<ng-template #emptyTemplate>
+  <app-empty-state></app-empty-state>
+</ng-template>
