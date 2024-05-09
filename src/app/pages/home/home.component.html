@@ -1,5 +1,5 @@
 <form
-  class="mt-6 mb-5"
+  class="mb-5"
   [formGroup]="filterForm"
   (ngSubmit)="performSearch()"
 >
@@ -51,12 +51,11 @@
 
     <div class="mb-5" *ngIf="!userSearchRequest?.loading; else loadingTemplate">
       <ng-container *ngIf="userSearchRequest?.successful && userSearchRequest?.response?.length; else emptyStateTemplate">
-        <section class="users-grid gap-3">
+        <section class="users-grid">
           <app-user-result-card
             *ngFor="let user of userSearchRequest.response"
             [user]="user"
-            [isSelected]="isOpen && selectedUser.username === user.username"
-            (clickButton)="openUserDetails(user)"
+            [isSelected]="userDetailService.isOpen && userDetailService.content.username === user.username"
           ></app-user-result-card>
         </section>
 
@@ -97,11 +96,6 @@
     </div>
   </section>
 </ng-container>
-
-<app-user-detail
-  [user]="selectedUser"
-  [(isOpen)]="isOpen"
-></app-user-detail>
 
 <ng-template #loadingTemplate>
   <app-loading></app-loading>

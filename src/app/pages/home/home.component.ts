@@ -4,10 +4,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RequestPaginationClass } from '@classes';
 import { RepositoryContentModel, RepositoryResponseType } from '@models/repository.model';
-import {
-  UserDetailContentModel, UserResultCardModel, UserSearchResponseType,
-} from '@models/user.model';
-import { RepositoryService, UserService } from '@services';
+import { UserResultCardModel, UserSearchResponseType } from '@models/user.model';
+import { RepositoryService, UserDetailService, UserService } from '@services';
 
 
 @Component({
@@ -23,9 +21,6 @@ export class HomeComponent {
     repository: new FormControl(false),
   });
 
-  selectedUser: UserDetailContentModel;
-  isOpen = false;
-
   userSearchRequest: RequestPaginationClass<UserSearchResponseType, UserResultCardModel[]>;
   repositorySearchRequest: RequestPaginationClass<RepositoryResponseType, RepositoryContentModel[]>;
 
@@ -35,6 +30,7 @@ export class HomeComponent {
   constructor(
     private readonly userService: UserService,
     private readonly repositoryService: RepositoryService,
+    protected readonly userDetailService: UserDetailService,
   ) {}
 
   performSearch() {
@@ -55,18 +51,6 @@ export class HomeComponent {
 
       this.filterForm.controls.search.reset();
     }
-  }
-
-  openUserDetails(user: UserResultCardModel) {
-    if(user.username === this.selectedUser?.username && this.isOpen) {
-      return;
-    }
-
-    this.selectedUser = {
-      ...user,
-      repositories: this.userService.mapUserRepositories(user.username),
-    };
-    this.isOpen = true;
   }
 
   searchUser(query: string, pagination?: boolean) {

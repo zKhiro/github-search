@@ -1,28 +1,28 @@
 <div
   class="card-fixed overflow-hidden"
-  [appHideBodyScroll]="isOpen"
-  [class.open]="isOpen"
+  [appHideBodyScroll]="userDetailService.isOpen"
+  [class.open]="userDetailService.isOpen"
 >
   <button
     class="btn close text-secondary border-start border-bottom p-2"
     type="button"
-    (click)="closeCard()"
+    (click)="userDetailService.close()"
   >
     <app-icon-cross [style.width.rem]="1.3125"></app-icon-cross>
   </button>
 
   <section class="card border-start ps-md-4 ps-3 pt-md-6 pt-5 rounded-0 position-relative">
     <ng-container *ngIf="userDetailRequest && !userDetailRequest.loading; else loadingTemplate">
-      <header class="d-flex mb-6">
+      <header class="d-flex pe-4 mb-6">
         <img
           class="profile-picture rounded-circle me-3"
           alt="rounded profile picture"
-          [src]="user.profilePicture"
+          [src]="userDetailService.content.profilePicture"
         >
 
         <div class="d-flex flex-column h-100">
           <h1 class="mb-1">{{ userDetailRequest.response.name }}</h1>
-          <p class="text-secondary fs-14px fw-semibold">{{ user.username }}</p>
+          <p class="text-secondary fs-14px fw-semibold">{{ userDetailService.content.username }}</p>
 
           <section class="d-flex mt-auto gap-2">
             <a
@@ -42,38 +42,44 @@
             </a>
           </section>
         </div>
+
+        <app-btn-favorite
+          class="ms-auto"
+          [user]="userDetailService.content"
+          [style.width.rem]="2.5"
+        ></app-btn-favorite>
       </header>
 
       <section class="overflow-auto pe-md-4 pe-3 pb-md-6 pb-5">
-        <section
-          *ngIf="user.repositories.length"
-          class="d-flex flex-column mb-4"
-        >
+        <section class="d-flex flex-column mb-4">
           <header>
             <h3 class="text-secondary">Repositórios</h3>
           </header>
 
-          <div class="repositories-grid gap-3">
-            <ng-container *ngFor="let repository of user.repositories; let index = index">
-              <app-repository
-                *ngIf="index < 3"
-                [repository]="repository"
-              ></app-repository>
+          <ng-container *ngIf="repositoriesRequest && !repositoriesRequest.loading; else loadingTemplate">
+            <div class="repositories-grid gap-3">
+              <ng-container *ngIf="repositoriesRequest.response?.length; else emptyStateTemplate">
+                <ng-container *ngFor="let repository of repositoriesRequest.response; let index = index">
+                  <app-repository
+                    *ngIf="index < 3"
+                    [repository]="repository"
+                  ></app-repository>
+                </ng-container>
+              </ng-container>
+            </div>
+
+            <ng-container *ngIf="repositoriesRequest.response.length > userService.maxVisibleRepositories">
+              <span class="d-block text-center text-secondary mb-2">...</span>
+
+              <a
+                class="btn btn-see-all btn-bg-light mx-auto"
+                [href]="userDetailRequest.response.link + '?tab=repositories'"
+                target="_blank"
+              >
+                Ver todos os repositórios
+              </a>
             </ng-container>
-          </div>
-
-          <ng-container *ngIf="user.repositories.length > userService.maxVisibleRepositories">
-            <span class="d-block text-center text-secondary mb-2">...</span>
-
-            <a
-              class="btn btn-see-all btn-bg-light mx-auto"
-              [href]="userDetailRequest.response.link + '?tab=repositories'"
-              target="_blank"
-            >
-              Ver todos os repositórios
-            </a>
           </ng-container>
-
         </section>
 
         <section class="d-flex flex-column">
@@ -119,14 +125,14 @@
           </ng-container>
         </section>
 
-        <section *ngIf="user.techs.length" class="mt-4">
+        <section *ngIf="userDetailService.content.techs.length" class="mt-4">
           <header>
             <h3 class="text-secondary">Techs</h3>
           </header>
 
           <section class="d-grid gap-2">
             <app-bar-chart
-              *ngFor="let tech of user.techs"
+              *ngFor="let tech of userDetailService.content.techs"
               [percentage]="tech.percentage"
             >
               {{ tech.name }}
@@ -148,6 +154,6 @@
 
 <div
   class="card-backdrop"
-  [class.open]="isOpen"
-  (click)="closeCard()"
+  [class.open]="userDetailService.isOpen"
+  (click)="this.userDetailService.close()"
 ></div>

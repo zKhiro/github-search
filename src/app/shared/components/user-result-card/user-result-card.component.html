@@ -1,8 +1,8 @@
 <button
-  class="card-user d-inline-flex gap-3 p-3 rounded w-100 h-100"
+  class="card-user d-inline-flex gap-3 p-3 rounded w-100 h-100 position-relative"
   type="button"
   [class.active]="isSelected"
-  (click)="clickButton.emit()"
+  (click)="clickButton.emit(); openDetails()"
 >
   <img
     alt="user-profile-picture"
@@ -22,3 +22,9 @@
     </section>
   </section>
 </button>
+
+<app-btn-favorite
+  class="btn-fav"
+  [class.favorite]="user.favorite"
+  [user]="user"
+></app-btn-favorite>

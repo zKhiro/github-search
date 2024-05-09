@@ -1,0 +1,8 @@
+<button
+  class="btn btn-fav p-0"
+  type="button"
+  [class.favorite]="user.favorite"
+  (click)="toggleUserToFavorite()"
+>
+  <app-icon-bookmark fillColor="inherit"></app-icon-bookmark>
+</button>

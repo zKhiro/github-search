@@ -1,16 +1,19 @@
-import { Subscription, tap } from 'rxjs';
+import { of, Subscription, tap } from 'rxjs';
 
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { RequestClass } from '@classes';
 import { CommitModel } from '@models/commits.model';
 import { SelectOptionModel } from '@models/input.model';
-import { UserDetailContentModel, UserDetailModel } from '@models/user.model';
-import { CommitsService, UserService } from '@services';
+import { RepositoryContentModel, RepositoryResponseModel } from '@models/repository.model';
+import { UserDetailModel } from '@models/user.model';
+import { CommitsService, UserDetailService, UserService } from '@services';
+import { UserDetailEvent } from '@utils';
 
 import { HideBodyScrollDirective } from '../../directives/hide-body-scroll.directive';
 import { BarChartComponent } from '../bar-chart/bar-chart.component';
+import { BtnFavoriteComponent } from '../btn-favorite/btn-favorite.component';
 import { CommitsComponent } from '../commits/commits.component';
 import { EmptyStateComponent } from '../empty-state/empty-state.component';
 import { IconCrossComponent } from '../icons/icon-cross/icon-cross.component';
@@ -28,6 +31,7 @@ import { RepositoryComponent } from '../repository/repository.component';
     IconCrossComponent,
 
     BarChartComponent,
+    BtnFavoriteComponent,
     CommitsComponent,
     EmptyStateComponent,
     InputSelectComponent,
@@ -43,32 +47,6 @@ import { RepositoryComponent } from '../repository/repository.component';
   styleUrl: './user-detail.component.scss'
 })
 export class UserDetailComponent implements OnInit, OnDestroy {
-  private _isOpen: boolean;
-  @Input() set isOpen(newValue: boolean) {
-    this._isOpen = newValue;
-    this.isOpenChange.emit(newValue);
-
-    if(this._isOpen) {
-      const currentYear = new Date().getFullYear();
-
-      this.commitFilterForm.setValue({
-        month: new Date().getMonth() + 1,
-        year: currentYear,
-      });
-
-      this.yearOptions = [{ label: currentYear.toString(), value: currentYear }]
-
-      this.requestUserDetails();
-    } else {
-      this.commitsServices.firstCommitYear = '';
-    }
-  };
-  get isOpen() { return this._isOpen; }
-
-  @Output() isOpenChange = new EventEmitter<boolean>();
-
-  @Input() user: UserDetailContentModel;
-
   readonly monthOptions: SelectOptionModel<number>[] = [
     { label: 'Jan.', value: 1 },
     { label: 'Fev.', value: 2 },
@@ -93,16 +71,39 @@ export class UserDetailComponent implements OnInit, OnDestroy {
 
   userDetailRequest: RequestClass<UserDetailModel>;
   commitsRequest: RequestClass<CommitModel[]>;
+  repositoriesRequest: RequestClass<RepositoryResponseModel[], RepositoryContentModel[]>
 
   commitFilterFormChanges: Subscription;
+  userDetailEvents: Subscription;
 
 
   constructor(
+    protected readonly userDetailService: UserDetailService,
     protected readonly userService: UserService,
     protected readonly commitsServices: CommitsService,
   ) {}
 
   ngOnInit() {
+    this.userDetailEvents = this.userDetailService.events.subscribe(event => {
+      switch(event) {
+        case UserDetailEvent.Close:
+          this.commitsServices.firstCommitYear = '';
+
+          break;
+        case UserDetailEvent.Open:
+          this.commitFilterForm.setValue({
+            month: new Date().getMonth() + 1,
+            year: new Date().getFullYear(),
+          });
+
+          this.requestRepositories();
+          this.requestUserDetails();
+          this.requestCommits();
+
+          break;
+      }
+    })
+
     this.commitFilterFormChanges = this.commitFilterForm.valueChanges.pipe(
       tap(() => {
         this.requestCommits();
@@ -114,12 +115,27 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     this.commitFilterFormChanges.unsubscribe();
   }
 
-  protected closeCard() {
-    this.isOpen = false;
+
+  private requestRepositories() {
+    const userRepositoriesCache = this.userService.userRepositoriesCache[this.userDetailService.content.username];
+
+    this.repositoriesRequest = new RequestClass(
+      userRepositoriesCache
+        ? of(userRepositoriesCache)
+        : this.userService.searchUserRepositories(this.userDetailService.content.username)
+    );
+
+    this.repositoriesRequest.observable$ = this.repositoriesRequest.observable$.pipe(
+      tap(() => {
+        this.repositoriesRequest.response = this.userService.mapUserRepositories(this.userDetailService.content.username);
+      }),
+    );
+
+    this.repositoriesRequest.subscribe();
   }
 
   private requestUserDetails() {
-    this.userDetailRequest = new RequestClass(this.userService.getUserDetails(this.user.username));
+    this.userDetailRequest = new RequestClass(this.userService.getUserDetails(this.userDetailService.content.username));
 
     this.userDetailRequest.observable$ = this.userDetailRequest.observable$.pipe(
       tap(response => this.userDetailRequest.response = response),
@@ -130,7 +146,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
 
   private requestCommits() {
     this.commitsRequest = new RequestClass(this.commitsServices.getCommits({
-      author: this.user.username,
+      author: this.userDetailService.content.username,
       month: this.commitFilterForm.value.month!,
       year: this.commitFilterForm.value.year!
     }));
