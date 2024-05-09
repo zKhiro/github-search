@@ -16,8 +16,8 @@
     </p>
 
     <section class="d-flex gap-2">
-      <ng-container *ngFor="let tech of user.techs; let index = index">
-        <div *ngIf="index < 3" class="badge bg-dark text-bg-light">{{ tech.name }}</div>
+      <ng-container *ngFor="let tech of techs; let index = index">
+        <div *ngIf="index < 3" class="badge bg-dark text-bg-light">{{ tech }}</div>
       </ng-container>
     </section>
   </section>

@@ -18,12 +18,21 @@ import { ButtonFavoriteComponent } from '../button-favorite/button-favorite.comp
   styleUrl: './user-result-card.component.scss'
 })
 export class UserResultCardComponent {
-  @Input() user: UserResultCardModel;
+  private _user: UserResultCardModel;
+  @Input() set user(newValue: UserResultCardModel) {
+    this._user = newValue;
+
+    this.techs = Array.from(this._user.techs.keys());
+  };
+  get user(): UserResultCardModel { return this._user; }
+
   @Input() isSelected: boolean;
 
   @Output() clickButton = new EventEmitter<void>();
 
   @HostBinding('class') classes = 'position-relative';
+
+  techs: string[];
 
 
   constructor(private userDetailService: UserDetailService) {}

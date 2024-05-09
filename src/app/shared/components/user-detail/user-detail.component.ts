@@ -7,7 +7,7 @@ import { RequestClass } from '@classes';
 import { CommitModel } from '@models/commits.model';
 import { SelectOptionModel } from '@models/input.model';
 import { RepositoryContentModel, RepositoryResponseModel } from '@models/repository.model';
-import { UserDetailModel } from '@models/user.model';
+import { TechModel, UserDetailModel } from '@models/user.model';
 import { CommitsService, UserDetailService, UserService } from '@services';
 import { UserDetailEvent } from '@utils';
 
@@ -69,6 +69,8 @@ export class UserDetailComponent implements OnInit, OnDestroy {
 
   yearOptions: SelectOptionModel<number>[];
 
+  techs: TechModel[] = [];
+
   userDetailRequest: RequestClass<UserDetailModel>;
   commitsRequest: RequestClass<CommitModel[]>;
   repositoriesRequest: RequestClass<RepositoryResponseModel[], RepositoryContentModel[]>
@@ -96,6 +98,8 @@ export class UserDetailComponent implements OnInit, OnDestroy {
             year: new Date().getFullYear(),
           });
 
+          this.setTechs();
+
           this.requestRepositories();
           this.requestUserDetails();
           this.requestCommits();
@@ -115,6 +119,11 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     this.commitFilterFormChanges.unsubscribe();
   }
 
+  private setTechs() {
+    this.techs = Array.from(this.userDetailService.content.techs, ([name, percentage]) => {
+      return { name, percentage }
+    });
+  }
 
   private requestRepositories() {
     const userRepositoriesCache = this.userService.userRepositoriesCache[this.userDetailService.content.username];

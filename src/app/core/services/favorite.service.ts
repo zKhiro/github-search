@@ -3,6 +3,7 @@ import { ObjectModel } from '@models/generic.model';
 import { UserResultCardModel } from '@models/user.model';
 
 import { LS_FAVORITE } from '../utils/endpoints.util';
+import { replacer, reviver } from '../utils/json.utils';
 
 
 @Injectable({
@@ -15,23 +16,23 @@ export class FavoriteService {
 
     if(localStorage.getItem(LS_FAVORITE)) {
       userToAdd = {
-        ...JSON.parse(localStorage.getItem(LS_FAVORITE)!),
+        ...JSON.parse(localStorage.getItem(LS_FAVORITE)!, reviver),
         ...userToAdd,
       };
     }
 
-    localStorage.setItem(LS_FAVORITE, JSON.stringify(userToAdd));
+    localStorage.setItem(LS_FAVORITE, JSON.stringify(userToAdd, replacer));
   }
 
   removeFromFavorites(username: string) {
     const users = this.getLocalStorage();
     delete users[username];
 
-    localStorage.setItem(LS_FAVORITE, JSON.stringify(users));
+    localStorage.setItem(LS_FAVORITE, JSON.stringify(users, replacer));
   }
 
   getAllFavorites(): ObjectModel<UserResultCardModel> {
-    return JSON.parse(localStorage.getItem(LS_FAVORITE)!);
+    return JSON.parse(localStorage.getItem(LS_FAVORITE)!, reviver);
   }
 
   getFavorite(username: string): UserResultCardModel | null {
@@ -40,6 +41,6 @@ export class FavoriteService {
   }
 
   private getLocalStorage(): ObjectModel<UserResultCardModel> {
-    return JSON.parse(localStorage.getItem(LS_FAVORITE)!) as ObjectModel<UserResultCardModel> || {};
+    return JSON.parse(localStorage.getItem(LS_FAVORITE)!, reviver) as ObjectModel<UserResultCardModel> || {};
   }
 }

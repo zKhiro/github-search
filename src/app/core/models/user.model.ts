@@ -3,11 +3,12 @@ import { SearchResponseModel } from './response.model';
 
 export type UserSearchResponseType              = SearchResponseModel<UserSearchResponseModel>;
 export type UserSearchResponseWithoutScoreType  = Omit<UserSearchResponseModel, 'score'>;
+export type TechMap                             = Map<string, number>;
 
 export interface UserResultCardModel {
   username: string;
   profilePicture: string;
-  techs: TechModel[];
+  techs: TechMap;
   favorite: boolean;
 }
 
